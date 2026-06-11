@@ -401,3 +401,20 @@ body {
     gap: 6px;
   }
 }
+
+.artist-nav a.active {
+  color: #111111;
+}
+
+.page-section {
+  margin-top: 40px;
+  padding-top: 0;
+  border-top: none;
+}
+
+.page-section h1 {
+  margin: 0 0 48px;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+}

@@ -969,3 +969,171 @@ body.artist-page {
   background: #eeeeee;
   color: #111111;
 }
+
+
+
+/* ==============================
+   FINAL WORK DETAIL PAGE FIX
+   左側作品資料 / 右側大圖 / 淡灰背景
+============================== */
+
+body.work-view-page {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100vh;
+  background: #eeeeee !important;
+  color: #111111;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC",
+    "Microsoft JhengHei", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* 整體作品頁容器 */
+.work-view {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 140px 90px 90px;
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 110px;
+  align-items: center;
+}
+
+/* 左側文字 */
+.work-view-info {
+  width: 360px;
+  max-width: 360px;
+}
+
+.work-view-info h1 {
+  margin: 0 0 58px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.18em;
+  color: #111111;
+}
+
+.work-view-info p {
+  margin: 0 0 34px;
+  color: #666666;
+  font-size: 15px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+/* 如果有空白段落，盡量不要佔太多空間 */
+.work-view-info p:empty {
+  display: none;
+}
+
+/* 右側圖片區 */
+.work-view-image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-view-image img {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  max-height: 76vh;
+  object-fit: contain;
+}
+
+/* ENQUIRE 按鈕 */
+.enquire-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 15px 28px;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+}
+
+.enquire-button:hover {
+  background: #444444;
+  color: #ffffff;
+}
+
+/* 右上角 X */
+.work-close {
+  position: fixed;
+  top: 40px;
+  right: 44px;
+  z-index: 999;
+  color: #111111;
+  text-decoration: none;
+  font-size: 42px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.work-close:hover {
+  color: #777777;
+}
+
+/* 右側下一件箭頭 */
+.work-next {
+  position: fixed;
+  right: 42px;
+  top: 50%;
+  z-index: 999;
+  transform: translateY(-50%);
+  color: #999999;
+  text-decoration: none;
+  font-size: 64px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.work-next:hover {
+  color: #111111;
+}
+
+/* 手機版 */
+@media (max-width: 900px) {
+  .work-view {
+    padding: 100px 24px 60px;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: start;
+  }
+
+  .work-view-info {
+    width: 100%;
+    max-width: none;
+  }
+
+  .work-view-info h1 {
+    margin-bottom: 34px;
+    font-size: 21px;
+    letter-spacing: 0.12em;
+  }
+
+  .work-view-info p {
+    font-size: 14px;
+  }
+
+  .work-view-image img {
+    max-width: 100%;
+    max-height: none;
+  }
+
+  .work-close {
+    top: 24px;
+    right: 24px;
+    font-size: 36px;
+  }
+
+  .work-next {
+    display: none;
+  }
+}

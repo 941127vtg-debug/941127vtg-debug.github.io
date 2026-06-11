@@ -176,3 +176,228 @@ img {
     height: 260px;
   }
 }
+
+/* ==============================
+   GALLERY BIOGRAPHY STYLE
+   參考畫廊藝術家頁：白底、黑字、細線、極簡列表
+============================== */
+
+body {
+  background: #ffffff;
+  color: #111111;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC",
+    "Microsoft JhengHei", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Header */
+.gallery-header {
+  width: 100%;
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #d8d8d8;
+  box-sizing: border-box;
+}
+
+.gallery-logo {
+  color: #111111;
+  text-decoration: none;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 28px;
+}
+
+.gallery-nav a {
+  color: #111111;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+
+.gallery-nav a:hover {
+  color: #777777;
+}
+
+/* Main */
+.gallery-main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 72px 48px 96px;
+  box-sizing: border-box;
+}
+
+/* Artist intro */
+.artist-hero {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 96px;
+  padding-bottom: 72px;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.artist-name-block h1 {
+  margin: 0 0 18px;
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.artist-name-block p {
+  margin: 0 0 8px;
+  color: #666666;
+  font-size: 14px;
+}
+
+.artist-bio {
+  max-width: 760px;
+}
+
+.artist-bio p {
+  margin: 0 0 24px;
+  color: #111111;
+}
+
+/* Sections */
+.gallery-section {
+  padding: 64px 0;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.gallery-section h2 {
+  margin: 0 0 32px;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+/* Works */
+.work-list {
+  width: 100%;
+}
+
+.work-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding: 22px 0;
+  border-top: 1px solid #d8d8d8;
+  color: #111111;
+  text-decoration: none;
+}
+
+.work-row:last-child {
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.work-row:hover {
+  color: #777777;
+}
+
+.work-title {
+  font-size: 17px;
+  letter-spacing: 0.04em;
+}
+
+.work-meta {
+  color: #666666;
+  font-size: 14px;
+}
+
+/* Awards */
+.award-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 48px;
+  padding: 18px 0;
+  border-top: 1px solid #d8d8d8;
+}
+
+.award-row:last-child {
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.award-row span {
+  color: #666666;
+}
+
+.award-row p {
+  margin: 0;
+}
+
+/* Share */
+.share-list {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.share-list a {
+  color: #111111;
+  text-decoration: none;
+  border-bottom: 1px solid #111111;
+}
+
+.share-list a:hover {
+  color: #777777;
+  border-bottom-color: #777777;
+}
+
+/* Footer */
+.gallery-footer {
+  padding: 28px 48px;
+  border-top: 1px solid #d8d8d8;
+  background: #ffffff;
+  color: #666666;
+  font-size: 13px;
+}
+
+/* Hide old template visual leftovers if still present */
+.site-header,
+.site-banner,
+.site-main,
+.site-footer {
+  background: transparent;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .gallery-header {
+    padding: 22px 24px;
+    display: block;
+  }
+
+  .gallery-nav {
+    margin-top: 18px;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .gallery-main {
+    padding: 48px 24px 72px;
+  }
+
+  .artist-hero {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .work-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .award-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

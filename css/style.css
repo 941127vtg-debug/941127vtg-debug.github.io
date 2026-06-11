@@ -796,3 +796,49 @@ body {
     display: none;
   }
 }
+
+/* ==============================
+   AWARDS PAGE
+============================== */
+
+.award-table {
+  width: 100%;
+}
+
+.award-table .award-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1.1fr 0.5fr;
+  gap: 36px;
+  padding: 10px 0;
+  border: none;
+  font-size: 18px;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+}
+
+.award-table .award-year,
+.award-table .award-category,
+.award-table .award-result {
+  color: #111111;
+}
+
+.award-table .award-result {
+  text-align: right;
+}
+
+.award-table .award-highlight span {
+  color: #d6c900;
+}
+
+@media (max-width: 900px) {
+  .award-table .award-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 16px 0;
+    border-bottom: 1px solid #d0d0d0;
+  }
+
+  .award-table .award-result {
+    text-align: left;
+  }
+}

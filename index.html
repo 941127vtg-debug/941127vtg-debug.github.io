@@ -1,110 +1,61 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-Hant">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
 
-    <title>董書劭｜個人網站</title>
+    <title>董書劭｜介紹</title>
 
     <link href="css/normalize.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
 
-    <meta content="董書劭個人網站，收錄新媒體藝術、裝置、錄像與攝影作品。" name="description" />
+    <meta content="董書劭個人網站介紹頁。" name="description" />
   </head>
 
-  <body>
-  <header class="gallery-header">
-    <a class="gallery-logo" href="#intro">SHU SHAO DONG</a>
-
-    <nav class="gallery-nav">
-      <a href="#intro">介紹</a>
-      <a href="#works">作品</a>
-      <a href="#awards">獎項</a>
-      <a href="#share">分享</a>
-    </nav>
-  </header>
-
-  <main class="gallery-main">
-    <section id="intro" class="artist-hero">
-      <div class="artist-name-block">
-        <h1>董書劭</h1>
-        <p>台灣，南投</p>
-        <p>SHU SHAO DONG</p>
+  <body class="artist-page">
+    <header class="artist-header">
+      <div class="artist-header-left">
+        <a class="artist-name" href="index.html">董書劭</a>
+        <span class="artist-meta">台灣，南投</span>
       </div>
 
-      <div class="artist-bio">
-        <p>
-          董書劭，生於南投，現就讀國立臺北藝術大學新媒體藝術學系。
-          創作多以錄像、機械裝置與影像檔案為媒介，關注教育制度、觀看關係、
-          技術系統與身體經驗之間的轉換。
-        </p>
+      <nav class="artist-nav">
+        <a class="active" href="index.html">介紹</a>
+        <a href="works.html">作品</a>
+        <a href="awards.html">獎項</a>
+        <a href="share.html">分享</a>
+      </nav>
+    </header>
 
-        <p>
-          作品常從日常經驗與技術失效出發，將掃描、列印、碎紙、撞擊、循環與觀看機制
-          轉化為敘事結構。透過機械動作與影像重複，作品嘗試回應當代生活中知識、
-          身體與媒介之間逐漸自動化的關係。
-        </p>
-      </div>
-    </section>
+    <main class="artist-main">
+      <section class="artist-intro">
+        <div class="artist-text">
+          <p class="artist-basic">
+            生於台灣南投<br />
+            現居、就學於台北
+          </p>
 
-    <section id="works" class="gallery-section">
-      <h2>作品</h2>
+          <p>
+            董書劭，現就讀國立臺北藝術大學新媒體藝術學系。創作多以錄像、機械裝置、影像檔案與自動控制系統為媒介，關注教育制度、觀看關係、技術系統與身體經驗之間的轉換。
+          </p>
 
-      <div class="work-list">
-        <a class="work-row" href="work-1.html">
-          <span class="work-title">學而不思則罔，思而不學則殆</span>
-          <span class="work-meta">2026｜機械裝置、自動控制系統</span>
-        </a>
+          <p>
+            作品常從日常經驗與技術失效出發，將掃描、列印、碎紙、撞擊、循環與觀看機制轉化為作品中的敘事結構。透過機械動作與影像重複，作品嘗試回應當代生活中知識、身體與媒介逐漸自動化的狀態。
+          </p>
 
-        <a class="work-row" href="#">
-          <span class="work-title">窺視</span>
-          <span class="work-meta">2026｜錄像裝置、門鏡、機械震動</span>
-        </a>
-
-        <a class="work-row" href="#">
-          <span class="work-title">人類創作防禦系統</span>
-          <span class="work-meta">2026｜互動裝置、AI 生成、破壞機制</span>
-        </a>
-
-        <a class="work-row" href="#">
-          <span class="work-title">街頭攝影</span>
-          <span class="work-meta">2025｜攝影、影像檔案</span>
-        </a>
-      </div>
-    </section>
-
-    <section id="awards" class="gallery-section">
-      <h2>獎項</h2>
-
-      <div class="award-list">
-        <div class="award-row">
-          <span>2023</span>
-          <p>自造之星全國季軍</p>
+          <p>
+            目前創作包括《學而不思則罔，思而不學則殆》、《窺視》、《人類創作防禦系統》等，作品涉及新媒體藝術、互動裝置、錄像藝術與觀念攝影。
+          </p>
         </div>
 
-        <div class="award-row">
-          <span>2026</span>
-          <p>國立臺北藝術大學新媒體藝術學系課程作品發表</p>
+        <div class="artist-image">
+          <img src="images/13.jpeg" alt="董書劭個人或作品影像" />
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <section id="share" class="gallery-section">
-      <h2>分享</h2>
-
-      <div class="share-list">
-        <a href="https://941127vtg-debug.github.io/" target="_blank">GitHub Pages</a>
-        <a href="https://glittering-gnome-018cf6.netlify.app/" target="_blank">Netlify</a>
-        <a href="mailto:941127vtg@gmail.com">Email</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="gallery-footer">
-    <p>© SHU SHAO DONG</p>
-  </footer>
-
-  <script src="js/site.js"></script>
-</body>
-
+    <footer class="artist-footer">
+      <p>© SHU SHAO DONG</p>
+    </footer>
+  </body>
 </html>

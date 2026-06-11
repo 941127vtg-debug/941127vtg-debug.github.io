@@ -8,6 +8,162 @@
 
     <link href="css/normalize.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
+
+    <style>
+      body.artist-page {
+        margin: 0;
+        background: #eeeeee;
+        color: #111111;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC",
+          "Microsoft JhengHei", Arial, sans-serif;
+      }
+
+      .artist-header {
+        width: 100%;
+        padding: 58px 88px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        box-sizing: border-box;
+        background: #eeeeee;
+      }
+
+      .artist-header-left {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+      }
+
+      .artist-name {
+        color: #111111;
+        text-decoration: none;
+        font-size: 30px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+      }
+
+      .artist-meta {
+        color: #111111;
+        font-size: 14px;
+        letter-spacing: 0.12em;
+      }
+
+      .artist-nav {
+        display: flex;
+        gap: 34px;
+        padding-top: 6px;
+      }
+
+      .artist-nav a {
+        color: #666666;
+        text-decoration: none;
+        font-size: 14px;
+        letter-spacing: 0.18em;
+      }
+
+      .artist-nav a:hover,
+      .artist-nav a.active {
+        color: #111111;
+      }
+
+      .artist-main {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 40px 88px 100px;
+        box-sizing: border-box;
+      }
+
+      .page-section h1 {
+        margin: 0 0 54px;
+        font-size: 30px;
+        font-weight: 400;
+        letter-spacing: 0.16em;
+      }
+
+      .award-table {
+        width: 100%;
+        max-width: 1180px;
+      }
+
+      .award-row {
+        display: grid;
+        grid-template-columns: 1.6fr 1.1fr 0.5fr;
+        gap: 36px;
+        padding: 8px 0;
+        border: none;
+        font-size: 24px;
+        line-height: 1.35;
+        letter-spacing: 0.04em;
+      }
+
+      .award-year,
+      .award-category,
+      .award-result {
+        color: #111111;
+      }
+
+      .award-result {
+        text-align: right;
+      }
+
+      .award-highlight .award-year,
+      .award-highlight .award-category,
+      .award-highlight .award-result {
+        color: #d6c900;
+      }
+
+      .artist-footer {
+        padding: 36px 88px 52px;
+        background: #eeeeee;
+        color: #777777;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+
+      @media (max-width: 900px) {
+        .artist-header {
+          padding: 32px 24px 28px;
+          display: block;
+        }
+
+        .artist-header-left {
+          display: block;
+        }
+
+        .artist-name {
+          display: block;
+          font-size: 26px;
+          margin-bottom: 8px;
+        }
+
+        .artist-nav {
+          margin-top: 28px;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
+
+        .artist-main {
+          padding: 32px 24px 72px;
+        }
+
+        .award-row {
+          grid-template-columns: 1fr;
+          gap: 2px;
+          padding: 16px 0;
+          border-bottom: 1px solid #cccccc;
+          font-size: 18px;
+        }
+
+        .award-result {
+          text-align: left;
+        }
+
+        .artist-footer {
+          padding: 32px 24px 48px;
+        }
+      }
+    </style>
   </head>
 
   <body class="artist-page">
@@ -26,52 +182,52 @@
     </header>
 
     <main class="artist-main">
-      <section class="artist-section page-section">
+      <section class="page-section">
         <h1>獎項</h1>
 
-       <div class="award-list award-table">
-  <div class="award-row">
-    <span class="award-year">2024 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
-    <span class="award-category">Event-Concert</span>
-    <span class="award-result">榮譽獎</span>
-  </div>
+        <div class="award-table">
+          <div class="award-row">
+            <span class="award-year">2024 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
+            <span class="award-category">Event-Concert</span>
+            <span class="award-result">榮譽獎</span>
+          </div>
 
-  <div class="award-row">
-    <span class="award-year">2024 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
-    <span class="award-category">Event-Concert</span>
-    <span class="award-result">官方精選</span>
-  </div>
+          <div class="award-row">
+            <span class="award-year">2024 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
+            <span class="award-category">Event-Concert</span>
+            <span class="award-result">官方精選</span>
+          </div>
 
-  <div class="award-row">
-    <span class="award-year">2024 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
-    <span class="award-category">Event-Traditions and Cultures</span>
-    <span class="award-result">官方精選</span>
-  </div>
+          <div class="award-row">
+            <span class="award-year">2024 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
+            <span class="award-category">Event-Traditions and Cultures</span>
+            <span class="award-result">官方精選</span>
+          </div>
 
-  <div class="award-row award-highlight">
-    <span class="award-year">2023 全國學生攝影比賽</span>
-    <span class="award-category">高中組</span>
-    <span class="award-result">金獎</span>
-  </div>
+          <div class="award-row award-highlight">
+            <span class="award-year">2023 全國學生攝影比賽</span>
+            <span class="award-category">高中組</span>
+            <span class="award-result">金獎</span>
+          </div>
 
-  <div class="award-row">
-    <span class="award-year">2023 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
-    <span class="award-category">People -Street Photography</span>
-    <span class="award-result">榮譽獎</span>
-  </div>
+          <div class="award-row">
+            <span class="award-year">2023 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
+            <span class="award-category">People -Street Photography</span>
+            <span class="award-result">榮譽獎</span>
+          </div>
 
-  <div class="award-row">
-    <span class="award-year">2023 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
-    <span class="award-category">People -Street Photography</span>
-    <span class="award-result">官方精選</span>
-  </div>
+          <div class="award-row">
+            <span class="award-year">2023 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
+            <span class="award-category">People -Street Photography</span>
+            <span class="award-result">官方精選</span>
+          </div>
 
-  <div class="award-row">
-    <span class="award-year">2023 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
-    <span class="award-category">Event-Traditions and Cultures</span>
-    <span class="award-result">官方精選</span>
-  </div>
-</div>
+          <div class="award-row">
+            <span class="award-year">2023 INTERNATIONAL PHOTOGRAPHY AWARDS</span>
+            <span class="award-category">Event-Traditions and Cultures</span>
+            <span class="award-result">官方精選</span>
+          </div>
+        </div>
       </section>
     </main>
 

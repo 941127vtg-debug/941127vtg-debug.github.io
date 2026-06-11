@@ -527,3 +527,135 @@ body {
     height: auto;
   }
 }
+
+/* ==============================
+   WORKS IMAGE INDEX PAGE
+============================== */
+
+.works-index-page {
+  padding-top: 20px;
+}
+
+.works-index-page h1 {
+  margin: 0 0 48px;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 56px 48px;
+}
+
+.work-card {
+  display: block;
+  color: #111111;
+  text-decoration: none;
+}
+
+.work-card img {
+  display: block;
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  object-position: center center;
+  filter: grayscale(100%);
+  transition:
+    filter 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.work-card:hover img {
+  filter: grayscale(0%);
+  opacity: 0.88;
+}
+
+.work-card-text {
+  padding-top: 18px;
+}
+
+.work-card-text h2 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+.work-card-text p {
+  margin: 0;
+  color: #666666;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+/* 單件作品頁 */
+.work-detail {
+  display: grid;
+  grid-template-columns: minmax(360px, 520px) 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.work-detail-info h1 {
+  margin: 0 0 28px;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+}
+
+.work-meta-list {
+  margin: 0 0 48px;
+  padding: 0;
+  list-style: none;
+  color: #666666;
+  font-size: 14px;
+  line-height: 2;
+  letter-spacing: 0.06em;
+}
+
+.work-description p {
+  margin: 0 0 28px;
+  font-size: 15px;
+  line-height: 2.1;
+  letter-spacing: 0.04em;
+}
+
+.work-detail-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 36px;
+  color: #111111;
+  text-decoration: none;
+  border-bottom: 1px solid #111111;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.back-link:hover {
+  color: #777777;
+  border-bottom-color: #777777;
+}
+
+@media (max-width: 900px) {
+  .works-grid {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .work-card img {
+    height: 320px;
+  }
+
+  .work-detail {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+}

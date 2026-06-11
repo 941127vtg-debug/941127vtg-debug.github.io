@@ -1137,3 +1137,224 @@ body.work-view-page {
     display: none;
   }
 }
+/* ==============================
+   WORKS THUMBNAIL INDEX
+============================== */
+
+.works-thumbnail-page {
+  padding-top: 20px;
+}
+
+.works-thumbnail-page h1 {
+  margin: 0 0 54px;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+}
+
+.works-thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 72px 56px;
+}
+
+.works-thumbnail-card {
+  display: block;
+  color: #111111;
+  text-decoration: none;
+}
+
+.works-thumbnail-card img {
+  width: 100%;
+  height: 420px;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+  filter: grayscale(100%);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.works-thumbnail-card:hover img {
+  opacity: 0.82;
+  filter: grayscale(0%);
+}
+
+.works-thumbnail-text {
+  padding-top: 18px;
+}
+
+.works-thumbnail-text h2 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.works-thumbnail-text p {
+  margin: 0;
+  color: #666666;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+/* ==============================
+   WORK DETAIL VIEW PAGE
+============================== */
+
+body.work-view-page {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #eeeeee;
+  color: #111111;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC",
+    "Microsoft JhengHei", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.work-view {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 140px 90px 90px;
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 110px;
+  align-items: center;
+}
+
+.work-view-info {
+  width: 360px;
+  max-width: 360px;
+}
+
+.work-view-info h1 {
+  margin: 0 0 58px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.18em;
+  color: #111111;
+}
+
+.work-view-info p {
+  margin: 0 0 34px;
+  color: #666666;
+  font-size: 15px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+.work-view-image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-view-image img {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  max-height: 76vh;
+  object-fit: contain;
+}
+
+.enquire-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 15px 28px;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+}
+
+.enquire-button:hover {
+  background: #444444;
+  color: #ffffff;
+}
+
+.work-close {
+  position: fixed;
+  top: 40px;
+  right: 44px;
+  z-index: 999;
+  color: #111111;
+  text-decoration: none;
+  font-size: 42px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.work-close:hover {
+  color: #777777;
+}
+
+.work-next {
+  position: fixed;
+  right: 42px;
+  top: 50%;
+  z-index: 999;
+  transform: translateY(-50%);
+  color: #999999;
+  text-decoration: none;
+  font-size: 64px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.work-next:hover {
+  color: #111111;
+}
+
+@media (max-width: 900px) {
+  .works-thumbnail-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .works-thumbnail-card img {
+    height: 320px;
+  }
+
+  .work-view {
+    padding: 100px 24px 60px;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: start;
+  }
+
+  .work-view-info {
+    width: 100%;
+    max-width: none;
+  }
+
+  .work-view-info h1 {
+    margin-bottom: 34px;
+    font-size: 21px;
+    letter-spacing: 0.12em;
+  }
+
+  .work-view-info p {
+    font-size: 14px;
+  }
+
+  .work-view-image img {
+    max-width: 100%;
+    max-height: none;
+  }
+
+  .work-close {
+    top: 24px;
+    right: 24px;
+    font-size: 36px;
+  }
+
+  .work-next {
+    display: none;
+  }
+}

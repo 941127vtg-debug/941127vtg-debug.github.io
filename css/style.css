@@ -842,3 +842,81 @@ body {
     text-align: left;
   }
 }
+
+/* ===== Unified top navigation layout ===== */
+
+.artist-header {
+  width: 100%;
+  padding: 58px 88px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-sizing: border-box;
+  background: #eeeeee;
+}
+
+.artist-header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.artist-name {
+  color: #111111;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.artist-meta {
+  color: #111111;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.artist-nav {
+  display: flex;
+  gap: 34px;
+  padding-top: 6px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.artist-nav a {
+  color: #666666;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+}
+
+.artist-nav a:hover,
+.artist-nav a.active {
+  color: #111111;
+}
+
+/* 手機版才讓選單換行到下面 */
+@media (max-width: 900px) {
+  .artist-header {
+    padding: 32px 24px 28px;
+    display: block;
+  }
+
+  .artist-header-left {
+    display: block;
+  }
+
+  .artist-name {
+    display: block;
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .artist-nav {
+    margin-top: 28px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+}

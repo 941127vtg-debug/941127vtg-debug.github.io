@@ -659,3 +659,140 @@ body {
     gap: 42px;
   }
 }
+
+/* ==============================
+   WORK DETAIL VIEWING ROOM STYLE
+============================== */
+
+.work-view-page {
+  margin: 0;
+  background: #eeeeee;
+  color: #111111;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC",
+    "Microsoft JhengHei", Arial, sans-serif;
+}
+
+.work-view {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 150px 90px 90px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 110px;
+  align-items: center;
+}
+
+.work-view-info {
+  max-width: 360px;
+}
+
+.work-view-info h1 {
+  margin: 0 0 58px;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.work-view-info p {
+  margin: 0 0 34px;
+  color: #666666;
+  font-size: 15px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+.work-view-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-view-image img {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  max-height: 78vh;
+  object-fit: contain;
+}
+
+.enquire-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 16px 28px;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+}
+
+.enquire-button:hover {
+  background: #444444;
+}
+
+.work-close {
+  position: fixed;
+  top: 42px;
+  right: 44px;
+  z-index: 10;
+  color: #111111;
+  text-decoration: none;
+  font-size: 42px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.work-close:hover {
+  color: #777777;
+}
+
+.work-next {
+  position: fixed;
+  right: 42px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999999;
+  text-decoration: none;
+  font-size: 64px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.work-next:hover {
+  color: #111111;
+}
+
+/* 手機版 */
+@media (max-width: 900px) {
+  .work-view {
+    padding: 100px 24px 60px;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .work-view-info {
+    max-width: none;
+  }
+
+  .work-view-info h1 {
+    font-size: 22px;
+    margin-bottom: 36px;
+  }
+
+  .work-view-image img {
+    max-height: none;
+  }
+
+  .work-close {
+    top: 24px;
+    right: 24px;
+    font-size: 36px;
+  }
+
+  .work-next {
+    display: none;
+  }
+}

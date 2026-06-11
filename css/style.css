@@ -117,3 +117,62 @@ body {
   /* 設定字距，常用於 Logo 或標題的空氣感。 */
   letter-spacing: 0.03em;}
 
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.img-fluid {
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+}
+
+.site-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.site-banner-content {
+  position: relative;
+  z-index: 2;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-sm-4 {
+  width: 33.3333%;
+}
+
+.col-sm-6 {
+  width: 50%;
+}
+
+.col-sm-8 {
+  width: 66.6666%;
+}
+
+@media (max-width: 768px) {
+  .col-sm-4,
+  .col-sm-6,
+  .col-sm-8 {
+    width: 100%;
+  }
+
+  .card img {
+    height: 260px;
+  }
+}

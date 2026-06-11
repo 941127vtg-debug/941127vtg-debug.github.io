@@ -1,0 +1,90 @@
+/*
+  檔案功能：_global.css
+  被引用目的：全站基礎樣式，例如字體、背景、文字顏色、圖片、連結與共通元素。
+  編寫安排：以模組化方式集中管理相關 class，讓 style.css 可以用 @import 組合多個小檔案，避免所有樣式混在單一大檔中。
+  與 HTML 的關係：HTML 先使用語意清楚的 class 名稱，本檔再針對這些 class 定義可重複使用的視覺規則。
+*/
+
+/*
+  ═══════════════════════════════════════════════════
+  【現代技術①】全域 box-sizing 重設
+  ───────────────────────────────────────────────────
+  瀏覽器預設（content-box）：
+    width 只算內容區 → 加上 padding + border 之後，元素實際佔位更大
+    例如：width: 300px + padding: 20px + border: 2px → 實際佔 344px
+    
+  現代做法（border-box）：
+    width 直接等於元素佔位，包含 padding 和 border
+    例如：width: 300px + padding: 20px + border: 2px → 仍然佔 300px
+    
+  最佳實踐：用 * { box-sizing: border-box } 讓全站統一行為，
+            配合 *::before / *::after 確保偽元素也套用。
+  ═══════════════════════════════════════════════════
+*/
+*,
+*::before,
+*::after {
+  /* border-box 讓 width/height 直接等於佔位大小，排版計算更直觀。 */
+  box-sizing: border-box;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+body {
+  /*
+    【現代技術①】系統字體堆疊（System Font Stack）
+    舊做法：font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      → 英文字體優先，中文只能降級到 Arial（Windows 顯示宋體）
+
+    新做法：以 -apple-system 開頭的系統字體堆疊
+      -apple-system       → Safari on macOS/iOS 的系統字體（SF Pro）
+      BlinkMacSystemFont  → Chrome on macOS 的系統字體（SF Pro）
+      "Noto Sans TC"      → Google Noto 繁體中文（若已載入）
+      "PingFang TC"       → macOS/iOS 蘋方繁體中文
+      "Microsoft JhengHei"→ Windows 微軟正黑體
+      sans-serif          → 最後備援
+
+    優點：
+      1. 無需下載外部字體 → 頁面載入速度最快
+      2. 依裝置自動使用最佳中文字體 → 跨平台視覺品質最高
+      3. 字體隨系統更新自動升級 → 永遠呈現最新設計
+  */
+  font-family:
+    -apple-system, BlinkMacSystemFont,
+    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
+    sans-serif;
+  /*
+    font-size: 100% 比 font-size: 16px 更友善：
+    等同瀏覽器預設（通常是 16px），
+    但當使用者在系統設定中調大字體時，此設定會正確響應縮放。
+  */
+  font-size: 100%;
+  /* 行高 1.6 無單位：行高 = 當前字體大小 × 1.6，段落閱讀節奏自然舒適。 */
+  line-height: 1.6;
+  /* 移除 body 預設外距，讓版面計算從 0 開始。 */
+  margin: 0;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+a {
+  /* 設定文字顏色。 */
+  color: #182022;
+  /* 設定連結底線等文字裝飾。 */
+  text-decoration: none;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+a:hover {
+  /* 設定文字顏色。 */
+  color: #4ea1d3;}
+
+/*
+  【現代技術①】響應式圖片
+  max-width: 100% → 圖片寬度不超過容器，防止溢出
+  height: auto     → 自動等比例縮放，不變形
+  display: block   → 移除圖片底部的行內元素間距（inline 的 baseline 空白）
+*/
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+.img-fluid {
+  /* 限制最大寬度，避免圖片在大螢幕上超出容器。 */
+  max-width: 100%;
+  /* 高度自動等比例縮放，防止變形。 */
+  height: auto;
+  /* display: block 移除圖片底部的行內空白（inline 元素底線留白）。 */
+  display: block;}

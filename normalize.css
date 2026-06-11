@@ -1,0 +1,92 @@
+/*
+  檔案功能：normalize.css
+  被引用目的：讓不同瀏覽器先回到一致、可預期的基礎狀態。
+  編寫安排：本檔集中處理 HTML 元素的預設行為，例如盒模型、body 外距、圖片寬度、連結底線與表單元素。
+  教學閱讀方式：先理解它是「打地基」的樣式；真正的藝術家網站視覺通常由 style.css 與各模組 CSS 接手完成。
+*/
+
+/*
+  【現代技術①】CSS 自訂屬性（Custom Properties）— 全域變數系統
+  作用：在 :root 宣告全站共用的顏色、間距與尺寸變數，
+        讓後續所有 CSS 以 var(--變數名) 引用；修改一處即可全站生效。
+  教學重點：
+    ① :root 代表 HTML 根元素，在此定義的變數可被頁面任何元素繼承。
+    ② 變數命名以 -- 開頭，慣例用小寫連字號（kebab-case）。
+    ③ 使用語法：var(--變數名)，可加第二個參數作備用值：var(--color-primary, blue)
+*/
+/* :root 選擇器指向 HTML 根元素，在此定義確保變數的繼承優先度最高。 */
+:root {
+  /* ── 色彩系統 ───────────────────────────────────────────── */
+  --color-primary: #30a9de;
+  --color-secondary: #607d8b;
+  --color-text: #182022;
+  --color-surface: #f1f1f1;
+  --color-bg: #ffffff;
+
+  /* ── 間距系統（rem = 相對根字體大小，預設 1rem = 16px）────── */
+  --space-sm: 0.5rem;   /* 8px  — 小元件內距 */
+  --space-md: 1.5rem;   /* 24px — 欄位間隔（最常用） */
+  --space-lg: 3rem;     /* 48px — 大區塊分隔 */
+
+  /* ── 版型 ────────────────────────────────────────────────── */
+  --container-max: 1200px;  /* 容器最大寬度 */
+  --container-pad: 1rem;    /* 容器左右內距 */
+
+  /* ── 文字排版 ───────────────────────────────────────────── */
+  --line-height-body: 1.7;
+  --line-height-heading: 1.2;
+}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+* {
+  /* 設定盒模型計算方式，常用 border-box 讓尺寸更直覺。 */
+  box-sizing: border-box;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+html {
+  /* 設定行高，影響段落閱讀節奏。 */
+  line-height: 1.15;
+  /* 設定 CSS 屬性 -webkit-text-size-adjust，用來微調版面或視覺表現。 */
+  -webkit-text-size-adjust: 100%;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+body {
+  /* 設定元素外距，控制元素與元素之間的距離。 */
+  margin: 0;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+main {
+  /* 設定元素顯示模式，例如 block、inline-block、flex。 */
+  display: block;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+img {
+  /* 限制最大寬度，避免內容在大螢幕上過度拉長。 */
+  max-width: 100%;
+  /* 設定元素高度。 */
+  height: auto;
+  /* 設定 CSS 屬性 vertical-align，用來微調版面或視覺表現。 */
+  vertical-align: middle;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+a {
+  /* 設定文字顏色。 */
+  color: inherit;
+  /* 設定連結底線等文字裝飾。 */
+  text-decoration: none;}
+
+button,
+input,
+textarea,
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+select {
+  /* 設定 CSS 屬性 font，用來微調版面或視覺表現。 */
+  font: inherit;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+table {
+  /* 設定 CSS 屬性 border-collapse，用來微調版面或視覺表現。 */
+  border-collapse: collapse;
+  /* 設定 CSS 屬性 border-spacing，用來微調版面或視覺表現。 */
+  border-spacing: 0;}
+

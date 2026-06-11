@@ -1,0 +1,86 @@
+/*
+  檔案功能：_helper.css
+  被引用目的：輔助工具類別，涵蓋現代 Flexbox 對齊輔助與向後相容的浮動輔助。
+  編寫安排：以模組化方式集中管理相關 class，讓 style.css 可以用 @import 組合多個小檔案，避免所有樣式混在單一大檔中。
+  與 HTML 的關係：HTML 先使用語意清楚的 class 名稱，本檔再針對這些 class 定義可重複使用的視覺規則。
+*/
+
+/*
+  ═══════════════════════════════════════════════════
+  【技術演進】浮動輔助類別的歷史與現代替代方案
+  ───────────────────────────────────────────────────
+  Bootstrap 2/3 時代（舊做法）：
+    .pull-right { float: right } → 把元素推到右邊
+    .pull-left  { float: left  } → 把元素推到左邊
+  
+  問題 1：float 在 Flexbox/Grid 容器中自動被忽略（無效）
+  問題 2：float 常需要 clearfix 才能讓父層包住子元素
+  問題 3：無法垂直對齊，需手動設定 line-height
+  
+  現代替代（Flexbox 容器內）：
+    margin-inline-start: auto → 取代 pull-right（把剩餘空間加到左邊，元素推右）
+    margin-inline-end:   auto → 取代 pull-left（把剩餘空間加到右邊，元素推左）
+  
+  CSS 邏輯屬性說明：
+    margin-inline-start = 行內軸「起始端」外距
+    ● LTR 語言（中文/英文，左到右）→ 等同 margin-left
+    ● RTL 語言（阿拉伯文，右到左）→ 自動變為 margin-right
+    優點：同一段 CSS 支援多語言方向，比 margin-left/right 更語意化
+  ═══════════════════════════════════════════════════
+*/
+
+/*── 現代 Flexbox/Grid 對齊輔助 ──────────────────────────────*/
+
+.ms-auto {
+  /*
+    在 flex/grid 容器中把此元素推到「結尾端（右側）」。
+    原理：剩餘空間全加到左側，等效 pull-right，但完全不依賴 float。
+    使用時機：父層已是 display: flex 或 display: grid 時。
+    取代：.pull-right { float: right }
+  */
+  margin-inline-start: auto !important;}
+
+.me-auto {
+  /*
+    在 flex/grid 容器中把此元素推到「起始端（左側）」。
+    原理：剩餘空間全加到右側，等效 pull-left，但完全不依賴 float。
+    使用時機：父層已是 display: flex 或 display: grid 時。
+    取代：.pull-left { float: left }
+  */
+  margin-inline-end: auto !important;}
+
+/*── 向後相容（舊有 pull 類別，建議新專案改用 .ms-auto / .me-auto）─*/
+
+.pull-right {
+  /*
+    ⚠ 舊式做法：float: right
+    注意：在 Flexbox/Grid 容器中此屬性自動被忽略（無效）。
+    新專案建議改用父層 justify-content: flex-end 或 .ms-auto。
+    此處保留是為了讓舊有 HTML 的 class="pull-right" 在非 flex 容器中仍能運作。
+  */
+  float: right !important;}
+
+.pull-left {
+  /*
+    ⚠ 舊式做法：float: left
+    注意：在 Flexbox/Grid 容器中此屬性自動被忽略（無效）。
+    新專案建議改用 .me-auto 或 justify-content: flex-start。
+    此處保留是為了讓舊有 HTML 的 class="pull-left" 在非 flex 容器中仍能運作。
+  */
+  float: left !important;}
+
+/*── 色彩工具 ──────────────────────────────────────────────────*/
+
+.dark-bg {
+  /* 設定背景顏色，建立區塊層次與視覺識別。 */
+  background-color: #000;
+  /* 設定文字顏色。 */
+  color: #fff;}
+
+.dark-bg a {
+  /* 設定文字顏色。 */
+  color: #fff;}
+
+.dark-bg a:hover {
+  /* 設定文字顏色。 */
+  color: rgba(255, 255, 255, 0.6);}

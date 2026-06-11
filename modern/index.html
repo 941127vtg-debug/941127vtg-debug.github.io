@@ -1,0 +1,439 @@
+﻿<!doctype html>
+<!-- 宣告 HTML5 文件類型，讓瀏覽器以標準模式解析頁面。 -->
+
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>現代版｜範例 10｜整合所有現代技術的藝術家網站</title>
+    <!--
+      【現代技術整合版】本頁整合所有現代 CSS 技術：
+        ① CSS Custom Properties — :root 完整變數系統
+        ② position: sticky — 黏頂導覽列
+        ③ CSS Grid grid-template-areas — 主版面配置
+        ④ Flexbox — 導覽列、卡片行、頁尾
+        ⑤ auto-fill + minmax — 作品卡片格線
+        ⑥ clamp() — h1/h2 響應式字體
+        ⑦ @layer — base/theme/utilities 層疊管理
+        ⑧ Container Queries — 文章卡元件
+      這是課程最終整合範例，展示完整的現代藝術家個人網站。
+      對比原版（../index.html）：
+        原版以傳統 float/inline-block 搭配多個 @media 斷點完成。
+        現代版整合 8 項現代技術，版面彈性更高，程式碼更清晰易維護。
+    -->
+    <link href="css/style.css" rel="stylesheet" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="現代 CSS 技術整合版：完整藝術家個人網站" name="description" />
+  </head>
+  <body>
+
+    <!-- ────────────────────────────────────────────────────
+         技術說明橫幅
+    ──────────────────────────────────────────────────── -->
+    <div class="tech-banner">
+      <div class="container">
+        <p class="tech-banner__text">
+          ▼ 本頁整合 8 項現代 CSS 技術：
+          Custom Properties / sticky / grid-template-areas / Flexbox /
+          auto-fill+minmax / clamp() / @layer / Container Queries。
+          對照 <a href="../index.html">原版</a> 感受差異。
+        </p>
+      </div>
+    </div>
+
+    <!--
+      ════════════════════════════════════════════════════════
+      【技術②】position: sticky 黏頂導覽列
+      【技術④】Flexbox 導覽列水平排列
+      ════════════════════════════════════════════════════════
+      site-header 使用 position: sticky; top: 0
+      → 頁面向下捲動時，header 黏在視窗頂部
+      → 比 position: fixed 好：不需要手動補 body 的 padding-top
+    -->
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="site-logo" href="#">NMA CLAW</a>
+        <nav aria-label="主要導覽">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="開關選單">
+            <span></span><span></span><span></span>
+          </button>
+          <ul class="site-nav" id="site-nav">
+            <li><a class="site-nav__link" href="#about">關於</a></li>
+            <li><a class="site-nav__link" href="#works">作品集</a></li>
+            <li><a class="site-nav__link" href="#articles">創作筆記</a></li>
+            <li><a class="site-nav__link" href="#contact">聯絡</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!--
+      ════════════════════════════════════════════════════════
+      【技術③】CSS Grid grid-template-areas 主版面
+      ════════════════════════════════════════════════════════
+      .site-wrapper 是整頁的 Grid 容器，
+      在 CSS 裡用 grid-template-areas 「畫出」版面圖：
+
+        "hero    hero"
+        "main    sidebar"
+        "footer  footer"
+
+      各子元素用 grid-area 對應到版面圖的格子。
+    -->
+    <div class="site-wrapper">
+
+      <!--
+        grid-area: hero — Hero 區（橫跨兩欄、全螢幕高度）
+        ════════════════════════════════════════════════════════
+        【技術⑥】clamp() 標題字體
+        h1 字體在 1.75rem ~ 4rem 之間流暢縮放，不需要 @media
+      -->
+      <section class="site-hero" id="home">
+        <div class="hero-content">
+          <span class="hero-eyebrow">新媒體藝術家</span>
+          <h1 class="hero-title">探索數位<br>與感知的邊界</h1>
+          <p class="hero-desc">
+            NMA Claw 的創作以光、聲音與互動科技為媒介，
+            探索人類感知與數位環境之間的詩意對話。
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn--primary" href="#works">瀏覽作品集</a>
+            <a class="btn btn--outline" href="#about">了解更多</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- grid-area: main — 主要內容區 -->
+      <main class="site-main">
+
+        <!--
+          ════════════════════════════════════════════════════
+          作品集 Section
+          【技術⑤】auto-fill + minmax 作品卡片格線
+          ════════════════════════════════════════════════════
+        -->
+        <section class="section" id="works">
+          <div class="section-header">
+            <h2 class="section-title">作品集</h2>
+            <p class="section-subtitle">以感知為起點，以科技為媒介的創作</p>
+          </div>
+
+          <!--
+            .works-grid：auto-fill + minmax 格線
+            不需要 @media，瀏覽器自動決定每列幾欄
+          -->
+          <div class="works-grid">
+            <article class="work-card">
+              <div class="work-card__image work-card__image--1">
+                <span class="work-card__year">2026</span>
+              </div>
+              <div class="work-card__body">
+                <h3 class="work-card__title">光譜呼吸計畫</h3>
+                <p class="work-card__category">互動裝置</p>
+                <p class="work-card__desc">探索光的頻率與人類呼吸節奏之間的對話。</p>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card__image work-card__image--2">
+                <span class="work-card__year">2025</span>
+              </div>
+              <div class="work-card__body">
+                <h3 class="work-card__title">城市聲景檔案</h3>
+                <p class="work-card__category">聲音裝置</p>
+                <p class="work-card__desc">記錄並重構城市中正在消逝的聲景記憶。</p>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card__image work-card__image--3">
+                <span class="work-card__year">2025</span>
+              </div>
+              <div class="work-card__body">
+                <h3 class="work-card__title">互動裝置研究</h3>
+                <p class="work-card__category">感測 / 即時運算</p>
+                <p class="work-card__desc">以感測器捕捉身體移動，生成即時視覺回饋。</p>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card__image work-card__image--4">
+                <span class="work-card__year">2025</span>
+              </div>
+              <div class="work-card__body">
+                <h3 class="work-card__title">生成影像實驗</h3>
+                <p class="work-card__category">機器學習 / 生成藝術</p>
+                <p class="work-card__desc">結合機器學習與即時渲染，探索演算法美學。</p>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card__image work-card__image--5">
+                <span class="work-card__year">2025</span>
+              </div>
+              <div class="work-card__body">
+                <h3 class="work-card__title">數位自然誌</h3>
+                <p class="work-card__category">虛擬生態系統</p>
+                <p class="work-card__desc">以程式模擬生態系統演化，邀請觀者參與。</p>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card__image work-card__image--6">
+                <span class="work-card__year">2024</span>
+              </div>
+              <div class="work-card__body">
+                <h3 class="work-card__title">展演紀錄巡迴</h3>
+                <p class="work-card__category">展覽 / 紀錄</p>
+                <p class="work-card__desc">作品巡迴亞洲各大媒體藝術節，紀錄多樣詮釋。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!--
+          ════════════════════════════════════════════════════
+          創作筆記 Section
+          【技術⑧】Container Queries 文章卡
+          ════════════════════════════════════════════════════
+          .articles-container 宣告 container-type: inline-size
+          .article-card 依容器寬度自動切換版型
+        -->
+        <section class="section" id="articles">
+          <div class="section-header">
+            <h2 class="section-title">創作筆記</h2>
+            <p class="section-subtitle">思考的軌跡與實驗的紀錄</p>
+          </div>
+
+          <!--
+            .articles-container 是 Container Queries 的容器
+            在 CSS 設定 container-type: inline-size
+            子元素 .article-card 會依此容器的寬度切換版型
+          -->
+          <div class="articles-container">
+            <article class="article-card">
+              <div class="article-card__image article-card__image--1"></div>
+              <div class="article-card__body">
+                <time class="article-card__date">2026.04.20</time>
+                <h3 class="article-card__title">感知的邊界：當身體遇見數位信號</h3>
+                <p class="article-card__desc">
+                  在新的裝置計畫中，我開始思考感測器的精度與詩意之間的張力。
+                  數位信號的精準是否必然排除偶然性？還是說，偶然性本身就是感知的本質？
+                </p>
+                <a class="article-card__link" href="#">閱讀完整文章 →</a>
+              </div>
+            </article>
+
+            <article class="article-card">
+              <div class="article-card__image article-card__image--2"></div>
+              <div class="article-card__body">
+                <time class="article-card__date">2026.02.10</time>
+                <h3 class="article-card__title">聲音作為時間容器：田野錄音的倫理</h3>
+                <p class="article-card__desc">
+                  在城市聲景計畫的田野錄音過程中，我遇到了一個根本性的倫理問題：
+                  當我記錄一個即將消失的聲音，我是在保存記憶，還是在凝固它、殺死它？
+                </p>
+                <a class="article-card__link" href="#">閱讀完整文章 →</a>
+              </div>
+            </article>
+
+            <article class="article-card">
+              <div class="article-card__image article-card__image--3"></div>
+              <div class="article-card__body">
+                <time class="article-card__date">2025.11.08</time>
+                <h3 class="article-card__title">機器學習的美學主體性：誰的美？</h3>
+                <p class="article-card__desc">
+                  當 AI 生成的影像被稱為「美麗」，主體是誰？是演算法、訓練資料、還是觀者的投射？
+                  生成藝術迫使我們重新定義「創作者」的意義。
+                </p>
+                <a class="article-card__link" href="#">閱讀完整文章 →</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!--
+          ════════════════════════════════════════════════════
+          關於 Section（About）
+          雙欄：文字 + 圖片（CSS Grid）
+          ════════════════════════════════════════════════════
+        -->
+        <section class="section about-section" id="about">
+          <div class="about-grid">
+            <div class="about-text">
+              <h2 class="section-title">關於藝術家</h2>
+              <p>
+                <strong>龍蝦俠（NMA Claw）</strong>，台灣新媒體藝術家，
+                以光、聲音、生物感測與生成演算法為創作媒介。
+                作品關注數位科技時代中人類感知的擴展與侷限。
+              </p>
+              <p>
+                作品曾展出於台北數位藝術節、香港 Art Basel、
+                東京 Media Ambition Tokyo、柏林 CTM Festival 等國際展覽。
+                現任教於台灣藝術大學，同時主持自己的藝術研究計畫。
+              </p>
+              <ul class="about-skills">
+                <li>互動裝置設計</li>
+                <li>生成藝術與演算法創作</li>
+                <li>聲音藝術與田野錄音</li>
+                <li>機器學習藝術應用</li>
+                <li>生物感測與身體界面</li>
+              </ul>
+            </div>
+            <div class="about-image">
+              <div class="about-image__placeholder"></div>
+              <blockquote class="about-quote">
+                「數位不是工具，是語言——
+                一種尚未被完全理解的詩的語言。」
+              </blockquote>
+            </div>
+          </div>
+        </section>
+
+        <!--
+          ════════════════════════════════════════════════════
+          聯絡 Section（Contact）
+          ════════════════════════════════════════════════════
+        -->
+        <section class="section contact-section" id="contact">
+          <div class="contact-inner">
+            <h2 class="section-title">聯絡</h2>
+            <p class="contact-desc">
+              歡迎合作邀請、展覽洽詢、媒體採訪或創作交流。
+            </p>
+            <div class="contact-links">
+              <a class="contact-link" href="mailto:aura@example.com">aura@example.com</a>
+              <a class="contact-link" href="#">Instagram</a>
+              <a class="contact-link" href="#">Behance</a>
+              <a class="contact-link" href="#">LinkedIn</a>
+            </div>
+          </div>
+        </section>
+
+      </main><!-- /.site-main -->
+
+      <!-- grid-area: sidebar — 右側邊欄 -->
+      <aside class="site-sidebar">
+        <div class="sidebar-widget">
+          <h3 class="sidebar-widget__title">現代技術清單</h3>
+          <ul class="tech-list">
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              CSS Custom Properties
+            </li>
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              position: sticky
+            </li>
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              grid-template-areas
+            </li>
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              Flexbox 導覽列
+            </li>
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              auto-fill + minmax
+            </li>
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              clamp() 響應式字體
+            </li>
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              @layer 層疊管理
+            </li>
+            <li class="tech-list__item tech-list__item--done">
+              <span class="tech-dot"></span>
+              Container Queries
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-widget">
+          <h3 class="sidebar-widget__title">展覽年表</h3>
+          <ul class="timeline">
+            <li class="timeline__item">
+              <span class="timeline__year">2026</span>
+              <span class="timeline__event">台北數位藝術節</span>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__year">2025</span>
+              <span class="timeline__event">香港 Art Basel</span>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__year">2025</span>
+              <span class="timeline__event">東京 MAT</span>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__year">2024</span>
+              <span class="timeline__event">柏林 CTM Festival</span>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__year">2024</span>
+              <span class="timeline__event">首爾 SeMA Biennale</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-widget">
+          <h3 class="sidebar-widget__title">相關連結</h3>
+          <ul class="quick-links">
+            <li><a href="../index.html">← 原版（範例 10）</a></li>
+            <li><a href="../../9/modern/index.html">← 範例 9 現代版</a></li>
+            <li><a href="../../8/modern/index.html">← 範例 8 現代版</a></li>
+            <li><a href="../../7/modern/index.html">← 範例 7 現代版</a></li>
+            <li><a href="../../6/modern/index.html">← 範例 6 現代版</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!--
+        grid-area: footer — 頁尾（橫跨兩欄）
+        【技術④】Flexbox 多欄頁尾
+      -->
+      <footer class="site-footer">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-col">
+              <div class="footer-logo">NMA CLAW</div>
+              <p class="footer-tagline">新媒體藝術 / 互動裝置 / 生成創作</p>
+            </div>
+            <div class="footer-col">
+              <h4 class="footer-heading">網站導覽</h4>
+              <ul class="footer-nav">
+                <li><a href="#about">關於藝術家</a></li>
+                <li><a href="#works">作品集</a></li>
+                <li><a href="#articles">創作筆記</a></li>
+                <li><a href="#contact">聯絡</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4 class="footer-heading">社群媒體</h4>
+              <ul class="footer-nav">
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Behance</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Vimeo</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4 class="footer-heading">合作洽詢</h4>
+              <p>aura@example.com</p>
+              <p>台灣・台北市</p>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2026 NMA CLAW. 現代 CSS 技術整合範例 10。
+              <a href="../index.html">← 對照原版</a>
+            </p>
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- /.site-wrapper -->
+
+  </body>
+</html>

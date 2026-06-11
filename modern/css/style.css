@@ -1,0 +1,962 @@
+/*
+  檔案功能：10/modern/css/style.css（範例 10 現代版 — 完整整合版）
+  示範重點：整合所有現代 CSS 技術的藝術家個人網站
+  整合技術：
+    ① CSS Custom Properties — :root 完整變數系統
+    ② position: sticky — 黏頂導覽列
+    ③ CSS Grid grid-template-areas — 主版面配置
+    ④ Flexbox — 導覽列、卡片行、頁尾多欄
+    ⑤ auto-fill + minmax — 作品卡片格線
+    ⑥ clamp() — h1/h2 響應式字體
+    ⑦ @layer — base/theme/utilities 層疊管理
+    ⑧ Container Queries — 文章卡元件
+*/
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術⑦】@layer 宣告（整合版）
+   ──────────────────────────────────────────────────────────
+   是什麼：明確宣告 CSS 層疊優先順序（後宣告 = 優先）
+   為何好：多個 CSS 模組並用時，不需要靠 !important 或特異性搏鬥，
+           只需在這一行決定誰覆蓋誰，完全可預測。
+   層級順序（優先由低到高）：
+     base → theme → layout → components → utilities
+══════════════════════════════════════════════════════════ */
+@layer base, theme, layout, components, utilities;
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術①】CSS Custom Properties — :root 完整變數系統
+   ──────────────────────────────────────────────────────────
+   是什麼：在 :root 宣告全站共用的設計 token（變數）
+   為何好：修改一個變數，全站相關樣式一次更新，維護成本極低
+   如何用：--變數名: 值; → 引用：var(--變數名)
+   放在 @layer 之外：layer 外的樣式優先於任何 layer，
+   :root 變數在哪個 layer 宣告都能存取，放外面最清楚。
+══════════════════════════════════════════════════════════ */
+:root {
+  /* ── 主色系 ───────────────────────────────────── */
+  --color-primary:      #30a9de;   /* 主色：導覽列、按鈕、強調 */
+  --color-primary-dark: #1a7fa8;   /* 深主色：hover 狀態 */
+  --color-secondary:    #607d8b;   /* 輔助色：副標題、頁尾 */
+  --color-accent:       #e91e63;   /* 強調色：標籤、年份 */
+
+  /* ── 中性色 ───────────────────────────────────── */
+  --color-text:         #182022;   /* 正文文字色（近黑）*/
+  --color-text-light:   #546e7a;   /* 次要文字色（灰） */
+  --color-bg:           #ffffff;   /* 主要背景色 */
+  --color-surface:      #f1f1f1;   /* 卡片 / 側欄底色 */
+  --color-surface-2:    #e8eef1;   /* 更深一級的表面色 */
+  --color-border:       #d0d7db;   /* 邊框色 */
+
+  /* ── Hero 配色 ──────────────────────────────────── */
+  --color-hero-bg:      #0d1b2a;   /* Hero 深色背景 */
+  --color-hero-text:    #ffffff;   /* Hero 文字白色 */
+
+  /* ── 間距系統（8px 基準）─────────────────────── */
+  --space-xs:   0.25rem;  /* 4px */
+  --space-sm:   0.5rem;   /* 8px */
+  --space-md:   1.5rem;   /* 24px */
+  --space-lg:   3rem;     /* 48px */
+  --space-xl:   5rem;     /* 80px */
+
+  /* ── 版型尺寸 ─────────────────────────────────── */
+  --container-max: 1200px;
+  --container-pad: 1rem;
+  --sidebar-width: 260px;
+
+  /* ── 卡片格線 ─────────────────────────────────── */
+  --card-min-width: 260px;
+
+  /* ── 動畫速度 ─────────────────────────────────── */
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.25s ease;
+
+  /* ── 圓角 ─────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* ── 陰影 ─────────────────────────────────────── */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 6px 20px rgba(0,0,0,0.12);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.18);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術⑦】@layer base — 基礎重設
+   ──────────────────────────────────────────────────────────
+   放什麼：瀏覽器預設值的重設，所有 HTML 元素的基礎設定
+   優先順序：最低（被 theme / layout / components / utilities 覆蓋）
+══════════════════════════════════════════════════════════ */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Helvetica Neue", sans-serif;
+    line-height: 1.7;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-block-start: 0;
+    line-height: 1.25;
+    font-weight: 700;
+  }
+
+  p {
+    margin-block-start: 0;
+    margin-block-end: var(--space-sm);
+  }
+
+  ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--color-primary-dark);
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+
+  code {
+    font-family: "Courier New", Courier, monospace;
+    background: #e8f4f8;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術⑦】@layer theme — 主題色彩
+   ──────────────────────────────────────────────────────────
+   放什麼：品牌色彩套用、標題顏色、全站視覺主題
+   優先順序：高於 base，低於 layout / components / utilities
+══════════════════════════════════════════════════════════ */
+@layer theme {
+  h1 {
+    color: var(--color-primary);
+  }
+
+  h2 {
+    color: var(--color-text);
+  }
+
+  h3 {
+    color: var(--color-text);
+  }
+
+  /* Hero 區內的標題用白色 */
+  .site-hero h1 {
+    color: var(--color-hero-text);
+  }
+
+  strong {
+    color: var(--color-text);
+  }
+
+  /* 選取文字的樣式 */
+  ::selection {
+    background-color: var(--color-primary);
+    color: white;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術⑦】@layer layout — 版面配置
+   ──────────────────────────────────────────────────────────
+   放什麼：Grid 版面配置、容器、主要結構
+   優先順序：高於 base / theme
+══════════════════════════════════════════════════════════ */
+@layer layout {
+  /* 現代化容器：margin-inline: auto 是 margin-left/right: auto 的邏輯屬性寫法 */
+  .container {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
+  }
+
+  /*
+    ════════════════════════════════════════
+    【技術③】CSS Grid grid-template-areas
+    ════════════════════════════════════════
+    是什麼：用字串「畫出」整頁版面結構圖
+    為何好：版面關係一目了然，不需計算百分比
+    版面圖：
+    ┌──────────────────┬──────────┐
+    │       hero       │   hero   │
+    ├──────────────────┼──────────┤
+    │       main       │ sidebar  │
+    ├──────────────────┼──────────┤
+    │      footer      │  footer  │
+    └──────────────────┴──────────┘
+  */
+  .site-wrapper {
+    display: grid;
+    grid-template-columns: 1fr var(--sidebar-width);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "hero    hero"
+      "main    sidebar"
+      "footer  footer";
+    min-height: 100vh;
+  }
+
+  /* 各區域對應到版面圖 */
+  .site-hero    { grid-area: hero; }
+  .site-main    { grid-area: main; padding: var(--space-lg) var(--space-md); }
+  .site-sidebar { grid-area: sidebar; background: var(--color-surface); padding: var(--space-md); }
+  .site-footer  { grid-area: footer; }
+
+  /* 手機版：單欄版面圖 */
+  @media (max-width: 768px) {
+    .site-wrapper {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "hero"
+        "main"
+        "sidebar"
+        "footer";
+    }
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術⑦】@layer components — UI 元件樣式
+   ──────────────────────────────────────────────────────────
+   放什麼：各個 UI 元件的樣式（header / hero / cards / footer 等）
+   優先順序：高於 base / theme / layout
+══════════════════════════════════════════════════════════ */
+@layer components {
+
+  /* ──────────────────────────────────────────────────
+     【技術②】position: sticky 黏頂導覽列
+     ──────────────────────────────────────────────────
+     是什麼：top: 0 讓元素在捲動到視窗頂部時「黏住」
+     為何好：比 position: fixed 更智慧——
+             頁面未捲動時照常在文件流，
+             捲動過頭才黏頂，不需要手動補 body padding
+  ────────────────────────────────────────────────── */
+  .site-header {
+    position: sticky;   /* ★ 黏頂的關鍵 */
+    top: 0;             /* ★ 距離視窗頂部 0px 時開始黏 */
+    z-index: 1000;      /* 確保在所有內容上方 */
+    background-color: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);   /* 毛玻璃效果（現代瀏覽器支援）*/
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .site-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+  }
+
+  .site-logo {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--color-text);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+  }
+
+  /* ── Flexbox 導覽列 ── */
+  .site-nav {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .site-nav__link {
+    display: block;
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .site-nav__link:hover {
+    color: var(--color-primary);
+    background-color: rgba(48, 169, 222, 0.08);
+    text-decoration: none;
+  }
+
+  /* 手機版漢堡按鈕 */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--space-sm);
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: transform var(--transition-normal);
+  }
+
+  /* ──────────────────────────────────────────────────
+     Hero Section — 全螢幕高度，垂直置中
+  ────────────────────────────────────────────────── */
+  .site-hero {
+    min-height: 80vh;          /* 至少 80% 視窗高度 */
+    display: flex;
+    align-items: center;       /* 垂直置中 */
+    justify-content: center;
+    background: var(--color-hero-bg);
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(48, 169, 222, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 80% 30%, rgba(233, 30, 99, 0.1) 0%, transparent 50%);
+    color: var(--color-hero-text);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .hero-content {
+    max-width: 720px;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  /* ──────────────────────────────────────────────────
+     【技術⑥】clamp() 響應式字體
+     ──────────────────────────────────────────────────
+     是什麼：clamp(最小, 理想, 最大) 讓字體在範圍內流暢縮放
+     為何好：不需要多個 @media 斷點
+     Hero h1：最小 2rem → 流暢 → 最大 4rem
+  ────────────────────────────────────────────────── */
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 4rem);   /* ★ clamp() 響應式字體 */
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-md);
+    color: var(--color-hero-text);
+  }
+
+  .hero-desc {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.8;
+    color: rgba(255,255,255,0.75);
+    max-width: 56ch;
+    margin: 0 auto var(--space-lg);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── 按鈕 ── */
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .btn--primary {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(48, 169, 222, 0.4);
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-primary-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(48, 169, 222, 0.5);
+    text-decoration: none;
+  }
+
+  .btn--outline {
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+  }
+
+  .btn--outline:hover {
+    border-color: white;
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    text-decoration: none;
+  }
+
+  /* ── Section 通用樣式 ── */
+  .section {
+    margin-bottom: var(--space-xl);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);   /* ★ clamp() */
+    margin-bottom: var(--space-sm);
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 4px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    margin-top: 0.3rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  /* ──────────────────────────────────────────────────
+     【技術⑤】作品卡片格線
+     auto-fill + minmax — 不需 @media 的響應式格線
+  ────────────────────────────────────────────────── */
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--card-min-width), 1fr));
+    gap: var(--space-md);
+  }
+
+  .work-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+  }
+
+  .work-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .work-card__image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-sm);
+  }
+
+  /* 作品卡片佔位漸層色 */
+  .work-card__image--1 { background: linear-gradient(160deg, #1a237e, #30a9de); }
+  .work-card__image--2 { background: linear-gradient(160deg, #4a148c, #e91e63); }
+  .work-card__image--3 { background: linear-gradient(160deg, #1b5e20, #4caf50); }
+  .work-card__image--4 { background: linear-gradient(160deg, #e65100, #ff9800); }
+  .work-card__image--5 { background: linear-gradient(160deg, #263238, #607d8b); }
+  .work-card__image--6 { background: linear-gradient(160deg, #33691e, #8bc34a); }
+
+  .work-card__year {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+  }
+
+  .work-card__body {
+    padding: var(--space-md);
+  }
+
+  .work-card__title {
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .work-card__category {
+    font-size: 0.8rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .work-card__desc {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ──────────────────────────────────────────────────
+     【技術⑧】Container Queries 文章卡元件
+     ──────────────────────────────────────────────────
+     是什麼：元件依容器寬度（非視窗寬度）切換版型
+     .articles-container 是容器，.article-card 是元件
+  ────────────────────────────────────────────────── */
+
+  /* 宣告容器（此區塊放在 components layer 以外，確保 @container 正常運作）*/
+
+  .article-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-md);
+    transition: box-shadow var(--transition-normal);
+  }
+
+  .article-card:hover { box-shadow: var(--shadow-md); }
+  .article-card:last-child { margin-bottom: 0; }
+
+  .article-card__image {
+    aspect-ratio: 16 / 7;
+    width: 100%;
+  }
+
+  .article-card__image--1 { background: linear-gradient(135deg, #0d47a1, #30a9de); }
+  .article-card__image--2 { background: linear-gradient(135deg, #880e4f, #e91e63); }
+  .article-card__image--3 { background: linear-gradient(135deg, #1b5e20, #66bb6a); }
+
+  .article-card__body {
+    padding: var(--space-md);
+  }
+
+  .article-card__date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.05em;
+  }
+
+  .article-card__title {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+    line-height: 1.4;
+  }
+
+  .article-card__desc {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: var(--space-sm);
+  }
+
+  .article-card__link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--transition-fast);
+    display: inline-block;
+  }
+
+  .article-card__link:hover {
+    border-bottom-color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  /* ── About Section ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  @media (max-width: 640px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  .about-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .about-skills li {
+    background: var(--color-surface-2);
+    color: var(--color-text-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid var(--color-border);
+  }
+
+  .about-image__placeholder {
+    background: linear-gradient(160deg, var(--color-hero-bg), var(--color-secondary));
+    border-radius: var(--radius-lg);
+    aspect-ratio: 4 / 5;
+    margin-bottom: var(--space-md);
+  }
+
+  .about-quote {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--color-text-light);
+    border-left: 3px solid var(--color-primary);
+    padding-left: var(--space-md);
+    margin: 0;
+    line-height: 1.8;
+  }
+
+  /* ── Contact Section ── */
+  .contact-section {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-desc {
+    color: var(--color-text-light);
+    margin-bottom: var(--space-md);
+    font-size: 1.05rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+
+  .contact-link {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    border: 2px solid var(--color-primary);
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    transition: all var(--transition-normal);
+  }
+
+  .contact-link:hover {
+    background: var(--color-primary);
+    color: white;
+    text-decoration: none;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar-widget {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sidebar-widget:last-child { margin-bottom: 0; }
+
+  .sidebar-widget__title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--color-primary);
+  }
+
+  .tech-list { list-style: none; }
+
+  .tech-list__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-surface-2);
+    color: var(--color-text-light);
+  }
+
+  .tech-list__item:last-child { border-bottom: none; }
+
+  .tech-list__item--done {
+    color: var(--color-text);
+  }
+
+  .tech-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .tech-list__item--done .tech-dot {
+    background: #2ecc71;
+  }
+
+  .timeline { list-style: none; }
+
+  .timeline__item {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: baseline;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid var(--color-surface-2);
+    font-size: 0.9rem;
+  }
+
+  .timeline__item:last-child { border-bottom: none; }
+
+  .timeline__year {
+    font-weight: 700;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    font-size: 0.8rem;
+  }
+
+  .timeline__event {
+    color: var(--color-text-light);
+  }
+
+  .quick-links li {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid var(--color-surface-2);
+  }
+
+  .quick-links li:last-child { border-bottom: none; }
+
+  .quick-links a {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+  }
+
+  .quick-links a:hover { color: var(--color-primary); }
+
+  /* ── Footer ── */
+  .site-footer {
+    background: var(--color-hero-bg);
+    color: rgba(255,255,255,0.75);
+    padding: var(--space-xl) 0 var(--space-md);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  .footer-logo {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    line-height: 1.6;
+  }
+
+  .footer-heading {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: white;
+    margin-bottom: var(--space-md);
+  }
+
+  .footer-nav li { padding: 0.25rem 0; }
+
+  .footer-nav a {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-nav a:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+  .footer-col p {
+    font-size: 0.9rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: var(--space-md);
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.5;
+  }
+
+  .footer-bottom a {
+    color: rgba(255,255,255,0.6);
+  }
+
+  .footer-bottom p { margin: 0; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術⑦】@layer utilities — 工具類別（最高優先）
+   ──────────────────────────────────────────────────────────
+   放什麼：單一用途、可覆蓋任何樣式的小工具 class
+   優先順序：最高（覆蓋所有 layer）
+   為何好：不需要 !important，utilities layer 的高優先已保證生效
+══════════════════════════════════════════════════════════ */
+@layer utilities {
+  .text-center  { text-align: center; }
+  .text-left    { text-align: left; }
+  .text-right   { text-align: right; }
+
+  .mt-sm { margin-top: var(--space-sm); }
+  .mt-md { margin-top: var(--space-md); }
+  .mt-lg { margin-top: var(--space-lg); }
+
+  .mb-sm { margin-bottom: var(--space-sm); }
+  .mb-md { margin-bottom: var(--space-md); }
+  .mb-lg { margin-bottom: var(--space-lg); }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   【技術⑧】Container Queries 容器宣告
+   ── 放在 @layer 之外，確保子元素可正確查詢容器 ──
+   ──────────────────────────────────────────────────────────
+   是什麼：為文章卡容器宣告 container-type，
+           讓 .article-card 可以用 @container 查詢容器寬度
+   為何好：
+     @media 查詢視窗寬度，同頁面所有文章卡只能同一版型。
+     @container 查詢容器寬度，容器寬時水平版型，容器窄時垂直版型，
+     同一頁面可以有多個不同寬度的文章卡容器，各自呈現最佳版型。
+══════════════════════════════════════════════════════════ */
+.articles-container {
+  container-type: inline-size;    /* ★ 宣告容器查詢維度（行內方向寬度）*/
+  container-name: articles;       /* ★ 命名容器（讓 @container 精準查詢）*/
+}
+
+/*
+  @container articles (min-width: 600px)
+  → 當 .articles-container 的寬度 ≥ 600px 時，
+    切換 .article-card 為水平版型（圖文並排）
+*/
+@container articles (min-width: 600px) {
+  .article-card {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .article-card__image {
+    width: 240px;
+    flex-shrink: 0;
+    aspect-ratio: auto;   /* 覆蓋預設的 16/7 */
+    min-height: 160px;
+  }
+
+  .article-card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   技術說明橫幅（全域，不在 @layer 內）
+══════════════════════════════════════════════════════════ */
+.tech-banner {
+  background-color: #fff3cd;
+  border-bottom: 2px solid #ffc107;
+  padding: var(--space-sm) 0;
+}
+
+.tech-banner__text {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #664d03;
+  line-height: 1.6;
+}
+
+.tech-banner__text a    { color: #664d03; font-weight: 600; }
+.tech-banner__text code { background: rgba(0,0,0,0.08); padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.88em; }

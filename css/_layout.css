@@ -1,0 +1,59 @@
+/*
+  檔案功能：_layout.css
+  被引用目的：版型與空間配置，例如 container、欄位、主內容、側欄、頁首與頁尾排列。
+  編寫安排：以模組化方式集中管理相關 class，讓 style.css 可以用 @import 組合多個小檔案，避免所有樣式混在單一大檔中。
+  與 HTML 的關係：HTML 先使用語意清楚的 class 名稱，本檔再針對這些 class 定義可重複使用的視覺規則。
+*/
+
+/*container*/
+.container-fluid,
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+.container {
+  /*
+    【現代技術②】容器現代化：移除 clearfix + 移除固定寬度斷點
+    舊做法：margin: auto + :after clearfix + @media { width: 720/920/1100px }
+    新做法：max-width + margin-inline + padding-inline，不需媒體查詢，不需 clearfix
+  */
+  /* max-width 搭配 CSS 變數，讓容器最大寬度集中在 :root 統一管理。 */
+  max-width: var(--container-max);
+  /* margin-inline 是 CSS 邏輯屬性，等同同時設定左右外距置中。 */
+  margin-inline: auto;
+  /* padding-inline 保留左右內距，行動裝置上內容不緊貼螢幕邊緣。 */
+  padding-inline: var(--container-pad);
+  /* position: relative 保留容器作為子元素絕對定位的基準點。 */
+  position: relative;}
+
+/*
+  【現代技術②】Flexbox 響應式欄位排版 — 取代 Float 浮動
+  移除 .container:after clearfix 與 @media 固定寬度斷點（720px/920px/1100px）
+*/
+/* Flexbox 父容器：取代 float + clearfix，子元素自動水平對齊。 */
+.site-main-inner {
+  /* display: flex 開啟彈性盒模型，Mobile-first 預設垂直排列。 */
+  display: flex;
+  /* flex-direction: column 讓子元素在手機端垂直堆疊排列（Mobile-first）。 */
+  flex-direction: column;
+  /* gap 設定相鄰子元素間距，取代舊有的 margin 計算。 */
+  gap: var(--space-md);}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+.content {
+  /* flex: 1 讓內容區自動占滿剩餘寬度，不需手動計算百分比。 */
+  flex: 1;}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+.sidebar {
+  /*
+    flex: 0 0 30% 三個值的意義：
+      0（flex-grow）：側欄不自動增長
+      0（flex-shrink）：側欄不自動縮小
+      30%（flex-basis）：側欄固定占 30% 寬度
+  */
+  flex: 0 0 30%;}
+
+/* 媒體查詢，依螢幕寬度調整響應式版面。 */
+@media (min-width: 768px) {
+  /* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+  .site-main-inner {
+    /* 768px 以上改為水平排列，展示多欄版型。 */
+    flex-direction: row;  }}

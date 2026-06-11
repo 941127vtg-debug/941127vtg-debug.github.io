@@ -1,0 +1,167 @@
+﻿/*
+  檔案功能：_grid.css
+  被引用目的：格線與欄位系統，用來安排作品集、文章列表或多欄版面。
+  編寫安排：以模組化方式集中管理相關 class，讓 style.css 可以用 @import 組合多個小檔案，避免所有樣式混在單一大檔中。
+  與 HTML 的關係：HTML 先使用語意清楚的 class 名稱，本檔再針對這些 class 定義可重複使用的視覺規則。
+*/
+
+/*
+  【現代技術④】CSS Grid 12欄格線系統 — 完整取代 Float 浮動格線
+
+  舊做法（Bootstrap 3 風格）：
+    .row:after { clear: both }               ← clearfix 清除浮動
+    [class*="col-"] { float: left; width: X% }  ← 手動計算百分比
+    .col-xs-4 { width: 33.333% }            ← xs/sm/md/lg × 12 = 60+ 個規則
+
+  新做法（CSS Grid）：
+    .row { display: grid; grid-template-columns: repeat(12, 1fr) }
+    [class*="col-"] { grid-column: span 12 }  ← 預設占滿（Mobile-first）
+    .col-xs-4 { grid-column: span 4 }         ← 直接指定跨欄數，不需算百分比
+
+  優點：
+    ① 不需 clearfix（CSS Grid 自帶流式排版，不需浮動）
+    ② 不需手動計算百分比（fr 單位自動平分）
+    ③ 支援 gap 設定欄位間距，不需 padding + 負值 margin
+    ④ 子元素自動對齊，可配合 align-items 控制垂直對齊
+*/
+
+/* .show-col：觀察欄位示範用的色塊，方便學習時看清格線切割位置。 */
+.show-col {
+  /* 設定元素高度。 */
+  height: 30px;
+  /* 設定背景，可包含顏色、圖片或漸層。 */
+  background: #ffbfa3;
+  /*區隔上下距離，方便觀察*/
+  /* 設定下方外距。 */
+  margin-bottom: 5px;}
+
+/* .row：CSS Grid 容器，取代舊有的 .row:after clearfix */
+.row {
+  /*
+    display: grid 開啟 CSS Grid 佈局模型。
+    grid-template-columns: repeat(12, 1fr) 說明：
+      repeat()：重複產生欄位，避免寫 12 次 1fr 1fr 1fr...
+      12：欄位數量
+      1fr：每欄占可用空間的 1/12（fr = fraction 分數單位，自動計算，不需手動算百分比）
+    舊做法：.row { margin: 0 -15px } 搭配 [col-*] { padding: 0 15px } 製造間距
+    新做法：直接用 gap 設定，寫法更直觀
+  */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  /* gap 設定欄與欄之間的間距，取代舊有的 padding: 0 15px + margin: 0 -15px。 */
+  gap: 0 var(--space-md);}
+
+/*觀察用*/
+/* 相鄰欄位降低不透明度，方便觀察格線切割方式。 */
+[class*="col-"] + [class*="col-"] {
+  /* 設定透明度，可用於淡入動畫。 */
+  opacity: 0.7;}
+
+/*
+  [class*="col-"]：屬性選擇器，匹配所有 class 名稱中包含 "col-" 的元素
+  預設所有欄位占滿 12 欄（手機版全寬），響應式斷點再縮小欄數
+  grid-column: span N → 元素橫跨 N 個格線軌道（track）
+*/
+/* 預設：所有欄位在手機端占滿整列（12欄），即 100% 寬。 */
+[class*="col-"] {
+  /*
+    grid-column: span 12 說明：
+      span 是「跨越」的意思
+      span 12 表示此欄位橫跨 12 條格線，即全寬
+      對應舊有 float 格線的 width: 100%
+  */
+  grid-column: span 12;}
+
+/*xs — 最小螢幕，預設不需媒體查詢（Mobile-first）*/
+/* col-xs-1：占 1 欄（12分之1寬）對應舊有 width: 8.333% */
+.col-xs-1  { grid-column: span 1; }
+/* col-xs-2：占 2 欄（12分之2寬）對應舊有 width: 16.667% */
+.col-xs-2  { grid-column: span 2; }
+/* col-xs-3：占 3 欄（四分之一寬）對應舊有 width: 25% */
+.col-xs-3  { grid-column: span 3; }
+/* col-xs-4：占 4 欄（三分之一寬）對應舊有 width: 33.333% */
+.col-xs-4  { grid-column: span 4; }
+/* col-xs-5：占 5 欄（對應舊有 width: 41.667%）*/
+.col-xs-5  { grid-column: span 5; }
+/* col-xs-6：占 6 欄（二分之一寬）對應舊有 width: 50% */
+.col-xs-6  { grid-column: span 6; }
+/* col-xs-7：占 7 欄（對應舊有 width: 58.333%）*/
+.col-xs-7  { grid-column: span 7; }
+/* col-xs-8：占 8 欄（三分之二寬）對應舊有 width: 66.667% */
+.col-xs-8  { grid-column: span 8; }
+/* col-xs-9：占 9 欄（四分之三寬）對應舊有 width: 75% */
+.col-xs-9  { grid-column: span 9; }
+/* col-xs-10：占 10 欄（對應舊有 width: 83.333%）*/
+.col-xs-10 { grid-column: span 10; }
+/* col-xs-11：占 11 欄（對應舊有 width: 91.667%）*/
+.col-xs-11 { grid-column: span 11; }
+/* col-xs-12：占 12 欄（全寬）對應舊有 width: 100% */
+.col-xs-12 { grid-column: span 12; }
+
+/*sm — 小型螢幕 544px+*/
+/* 媒體查詢，依螢幕寬度調整響應式版面。 */
+@media (min-width: 544px) {
+  /* col-sm-N：544px 以上才生效的欄位寬度，以跨欄數直接表達，無需計算百分比 */
+  .col-sm-1  { grid-column: span 1; }
+  .col-sm-2  { grid-column: span 2; }
+  .col-sm-3  { grid-column: span 3; }
+  .col-sm-4  { grid-column: span 4; }
+  .col-sm-5  { grid-column: span 5; }
+  .col-sm-6  { grid-column: span 6; }
+  .col-sm-7  { grid-column: span 7; }
+  .col-sm-8  { grid-column: span 8; }
+  .col-sm-9  { grid-column: span 9; }
+  .col-sm-10 { grid-column: span 10; }
+  .col-sm-11 { grid-column: span 11; }
+  .col-sm-12 { grid-column: span 12; }}
+
+/*md — 中型螢幕 768px+*/
+/* 媒體查詢，依螢幕寬度調整響應式版面。 */
+@media (min-width: 768px) {
+  /* col-md-N：768px 以上才生效的欄位寬度 */
+  .col-md-1  { grid-column: span 1; }
+  .col-md-2  { grid-column: span 2; }
+  .col-md-3  { grid-column: span 3; }
+  .col-md-4  { grid-column: span 4; }
+  .col-md-5  { grid-column: span 5; }
+  .col-md-6  { grid-column: span 6; }
+  .col-md-7  { grid-column: span 7; }
+  .col-md-8  { grid-column: span 8; }
+  .col-md-9  { grid-column: span 9; }
+  .col-md-10 { grid-column: span 10; }
+  .col-md-11 { grid-column: span 11; }
+  .col-md-12 { grid-column: span 12; }}
+
+/*lg — 大型螢幕 992px+*/
+/* 媒體查詢，依螢幕寬度調整響應式版面。 */
+@media (min-width: 992px) {
+  /* col-lg-N：992px 以上才生效的欄位寬度 */
+  .col-lg-1  { grid-column: span 1; }
+  .col-lg-2  { grid-column: span 2; }
+  .col-lg-3  { grid-column: span 3; }
+  .col-lg-4  { grid-column: span 4; }
+  .col-lg-5  { grid-column: span 5; }
+  .col-lg-6  { grid-column: span 6; }
+  .col-lg-7  { grid-column: span 7; }
+  .col-lg-8  { grid-column: span 8; }
+  .col-lg-9  { grid-column: span 9; }
+  .col-lg-10 { grid-column: span 10; }
+  .col-lg-11 { grid-column: span 11; }
+  .col-lg-12 { grid-column: span 12; }}
+
+/*xl — 超大螢幕 1200px+*/
+/* 媒體查詢，依螢幕寬度調整響應式版面。 */
+@media (min-width: 1200px) {
+  /* col-xl-N：1200px 以上才生效的欄位寬度 */
+  .col-xl-1  { grid-column: span 1; }
+  .col-xl-2  { grid-column: span 2; }
+  .col-xl-3  { grid-column: span 3; }
+  .col-xl-4  { grid-column: span 4; }
+  .col-xl-5  { grid-column: span 5; }
+  .col-xl-6  { grid-column: span 6; }
+  .col-xl-7  { grid-column: span 7; }
+  .col-xl-8  { grid-column: span 8; }
+  .col-xl-9  { grid-column: span 9; }
+  .col-xl-10 { grid-column: span 10; }
+  .col-xl-11 { grid-column: span 11; }
+  .col-xl-12 { grid-column: span 12; }}

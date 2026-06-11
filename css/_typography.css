@@ -1,0 +1,71 @@
+﻿/*
+  檔案功能：_typography.css
+  被引用目的：文字層級與排版，例如標題、段落、引用、行高與字距。
+  編寫安排：以模組化方式集中管理相關 class，讓 style.css 可以用 @import 組合多個小檔案，避免所有樣式混在單一大檔中。
+  與 HTML 的關係：HTML 先使用語意清楚的 class 名稱，本檔再針對這些 class 定義可重複使用的視覺規則。
+*/
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* 設定 CSS 屬性 font-weight，用來微調版面或視覺表現。 */
+  font-weight: 500;
+  /* line-height 控制行距，標題行高應比內文更緊密。 */
+  line-height: var(--line-height-heading);}
+
+/* 選擇器開頭，指定接下來的屬性要套用到哪些 HTML 元素。 */
+.title-sub {
+  /* 設定文字大小。 */
+  font-size: 65%;
+  /* 設定 CSS 屬性 font-weight，用來微調版面或視覺表現。 */
+  font-weight: 300;}
+/*
+  【現代技術⑤】clamp() 響應式字體大小 — 取代 @media 手動設定字體斷點
+  舊做法：
+    h1 { font-size: 1.5rem; }
+    @media (min-width: 768px) { h1 { font-size: 2rem; } }
+    @media (min-width: 1200px) { h1 { font-size: 2.5rem; } }
+  新做法：
+    h1 { font-size: clamp(最小值, 理想值, 最大值); }
+
+  clamp(min, preferred, max) 語法說明：
+    min：字體最小尺寸（手機端最小限制，避免過小）
+    preferred：理想尺寸，通常用 vw（視窗寬度百分比）讓字體跟螢幕等比縮放
+    max：字體最大尺寸（大螢幕上限，避免過大）
+  優點：
+    ① 流暢過渡，不像媒體查詢有跳躍感
+    ② 一行取代多個 @media 斷點
+    ③ 完全由瀏覽器自動計算，不需 JavaScript
+*/
+/* h1 響應式字體：手機 1.75rem → 流暢縮放 → 桌機最大 3rem */
+h1 {
+  /*
+    clamp(1.75rem, 4vw, 3rem) 說明：
+      1.75rem = 手機端最小字體（28px）
+      4vw    = 視窗寬度的 4%（768px 時 ≈ 30.7px，自然過渡）
+      3rem   = 桌機最大字體（48px）
+  */
+  font-size: clamp(1.75rem, 4vw, 3rem);}
+
+/* h2 響應式字體：手機 1.4rem → 流暢縮放 → 桌機最大 2.25rem */
+h2 {
+  /*
+    clamp(1.4rem, 3vw, 2.25rem) 說明：
+      1.4rem = 22.4px（手機舒適閱讀）
+      3vw   = 視窗寬度的 3%（自然縮放）
+      2.25rem = 36px（桌機適中大小）
+  */
+  font-size: clamp(1.4rem, 3vw, 2.25rem);}
+
+/* h3 響應式字體：手機 1.15rem → 流暢縮放 → 桌機最大 1.75rem */
+h3 {
+  font-size: clamp(1.15rem, 2.5vw, 1.75rem);}
+
+/* h4-h6 使用固定相對字體大小，層級清晰 */
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.1rem;  }
+h6 { font-size: 1rem;    }
